@@ -1,9 +1,9 @@
 #!/bin/bash
 #Sys.setenv(R_LIBS_SITE="/scratch/PROLFQUA/r-site-library/")
 
-Rpackage = commandArgs(trailingOnly = TRUE)
+Rpackage = commandArgs(trailingOnly=TRUE)
 
-install.packages("devtools", "remotes", repos="https://cloud.r-project.org")
+install.packages(c("devtools", "remotes"), repos="https://cloud.r-project.org")
 remotes::install_gitlab("wolski/prolfquaData", host="gitlab.bfabric.org")
 
 
