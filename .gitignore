@@ -1,3 +1,4 @@
 r-site-library*/
 test_*/
 *.log
+.Rproj.user
