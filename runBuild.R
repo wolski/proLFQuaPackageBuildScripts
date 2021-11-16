@@ -46,6 +46,10 @@ if (retval != 0) {
   stop("ERROR : ",Rpackage , " package installation failed!")
 }
 
+cat(" >>>>>> RUN EXAMPLES <<<<< ")
+devtools::run_examples(pkg = Rpackage)
+cat(" >>>>>> BUILD_SITES <<<<< ")
+
 pkgdown::build_site(pkg = Rpackage)
 
 setwd("..")
