@@ -18,7 +18,7 @@ rm -Rf d:/prolfquaPackageBuilds/test_buildprolfqua/*
 Rscript.exe runBuild.R prolfqua > runBuild_prolfqua.log 2>&1
 
 rm -Rf d:/prolfquaPackageBuilds/test_buildprolfquaBenchmark/*
-Rscript.exe runBuild.R prolfquaBenchmark  > runBuild_prolfqua.log 2>&1
+Rscript.exe runBuild.R prolfquaBenchmark  > runBuild_prolfquaBenchmark.log 2>&1
 
 
 pause
