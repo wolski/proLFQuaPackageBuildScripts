@@ -4,7 +4,6 @@
 reinstall = FALSE
 args = commandArgs(trailingOnly = TRUE)
 Rpackage = args[1]
-# Rpackage = 'prolfqua'
 
 cat(">>>>>",Rpackage, "\n")
 cat(">>>>> reinstall", reinstall , "\n")
@@ -51,11 +50,10 @@ if (retval != 0) {
     stop("Can not clone : ",repository, "\n")
 }
 
-message(">>> building Rpackage: ", Rpackage)
 
 if (dir.exists(paths) && reinstall) {
-    cat(">>> reinstalling packages")
-    devtools::install_dev_deps("prolfqua", quiet = TRUE, type="binary")
+    message(">>> installing package dependencies for : ", Rpackage)
+    devtools::install_dev_deps(Rpackage, quiet = TRUE, type="binary")
 }
 
 cat("\n\n\n >>>> PREINSTALLED DEPENDENCIES <<<< \n\n\n")

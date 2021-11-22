@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/Rscript
 #Sys.setenv(R_LIBS_SITE="/scratch/PROLFQUA/r-site-library/")
 
-reinstall = FALSE
+reinstall = FALSE # nolint
 args = commandArgs(trailingOnly = TRUE)
 Rpackage = args[1]
 # Rpackage = 'prolfqua'
