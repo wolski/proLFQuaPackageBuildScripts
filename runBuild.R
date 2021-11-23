@@ -3,7 +3,8 @@
 
 reinstall = FALSE # nolint
 args = commandArgs(trailingOnly = TRUE)
-Rpackage = args[1]
+Gitproject = args[1]
+Rpackage = args[2]
 # Rpackage = 'prolfqua'
 
 cat(">>>>>",Rpackage, "\n")
@@ -14,7 +15,7 @@ setwd(test_dir)
 
 
 if (!dir.exists(Rpackage)) {
-  repository = paste0("https://github.com/wolski/", Rpackage)
+  repository = paste0("https://github.com/", Gitproject ,"/", Rpackage)
   message(">>>> cloning repository: ", repository)
   retval = system2("git", args = c("clone", repository))
 
@@ -30,7 +31,7 @@ if (retval != 0) {
 }
 
 message(">>> running Rpackage check on ", Rpackage)
-pat = paste0(Rpackage, "_0.*.tar.gz")
+pat = paste0(Rpackage, "_[0-9].*.tar.gz")
 packagetar = dir(".",pattern = pat)
 retval = system2("R", args = c("CMD","check", packagetar))
 if (retval != 0) {
@@ -39,8 +40,8 @@ if (retval != 0) {
 
 message(">>> running biocheck for Rpackage")
 BiocCheck::BiocCheck(packagetar)
-message(">>> running Rpackagedown for Rpackage")
 
+message(">>> installing the pacakge ", packagetar, "\n")
 retval = system2("R", args = c("CMD","INSTALL", packagetar))
 if (retval != 0) {
   stop("ERROR : ",Rpackage , " package installation failed!")
@@ -50,7 +51,10 @@ cat(" >>>>>> RUN EXAMPLES <<<<< ")
 devtools::run_examples(pkg = Rpackage)
 cat(" >>>>>> BUILD_SITES <<<<< ")
 
+message(">>> running Rpackagedown for Rpackage")
+
 pkgdown::build_site(pkg = Rpackage)
 
 setwd("..")
+
 

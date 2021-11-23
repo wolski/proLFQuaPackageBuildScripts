@@ -10,10 +10,10 @@ set "R_LIBS_SITE=d:\prolfquaPackageBuilds\r-site-library_prozor"
 mkdir "d:\prolfquaPackageBuilds\test_buildprozor"
 
 if %Install% == 1 (
-    rm -Rf d:/prolfquaPackageBuilds/test_buildprozor/*
+    rm -Rf d:/prolfquaPackageBuilds/test_build_prozor/*
     rm -Rf d:/prolfquaPackageBuilds/r-site-library_prozor/*
-    Rscript.exe InstallDependencies.R prozor reinst 
+    Rscript.exe InstallDependencies.R protViz prozor reinst 
 )
 
-rm -Rf d:/prolfquaPackageBuilds/test_buildprozor/*
-Rscript.exe runBuild.R prozor  > runBuild_prozor.log 2>&1
+rm -Rf d:/prolfquaPackageBuilds/test_build_prozor/*
+Rscript.exe runBuild.R protViz prozor  > runBuild_prozor.log 2>&1
