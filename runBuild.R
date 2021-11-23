@@ -9,33 +9,31 @@ Rpackage = args[2]
 
 cat(">>>>>",Rpackage, "\n")
 
-test_dir = paste0("test_build", Rpackage,"/")
-dir.create(test_dir)
+test_dir = paste0("test_build_", Rpackage, "/")
 setwd(test_dir)
 
 
 if (!dir.exists(Rpackage)) {
-  repository = paste0("https://github.com/", Gitproject ,"/", Rpackage)
+  repository = paste0("https://github.com/", Gitproject, "/", Rpackage)
   message(">>>> cloning repository: ", repository)
   retval = system2("git", args = c("clone", repository))
 
   if (retval != 0) {
-    stop("Can not clone : ",repository, "\n")
+    stop("Can not clone : ", repository, "\n")
   }
 }
 
-retval = system2("R", args = c("CMD","build", "--log", Rpackage))
-#devtools::build("prolfqua")
+retval = system2("R", args = c("CMD", "build", "--log", Rpackage))
 if (retval != 0) {
-  stop("ERROR :", Rpackage,"package build failed!")
+  stop("ERROR :", Rpackage, "package build failed!")
 }
 
 message(">>> running Rpackage check on ", Rpackage)
 pat = paste0(Rpackage, "_[0-9].*.tar.gz")
-packagetar = dir(".",pattern = pat)
-retval = system2("R", args = c("CMD","check", packagetar))
+packagetar = dir(".", pattern = pat)
+retval = system2("R", args = c("CMD", "check", packagetar))
 if (retval != 0) {
-  stop("ERROR : ",Rpackage , " package check failed!")
+  stop("ERROR : ", Rpackage, " package check failed!")
 }
 
 message(">>> running biocheck for Rpackage")
@@ -44,7 +42,7 @@ BiocCheck::BiocCheck(packagetar)
 message(">>> installing the pacakge ", packagetar, "\n")
 retval = system2("R", args = c("CMD","INSTALL", packagetar))
 if (retval != 0) {
-  stop("ERROR : ",Rpackage , " package installation failed!")
+  stop("ERROR : ", Rpackage, " package installation failed!")
 }
 
 cat(" >>>>>> RUN EXAMPLES <<<<< ")
@@ -56,5 +54,3 @@ message(">>> running Rpackagedown for Rpackage")
 pkgdown::build_site(pkg = Rpackage)
 
 setwd("..")
-
-

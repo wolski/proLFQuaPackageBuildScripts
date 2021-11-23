@@ -12,7 +12,6 @@ if(length(args) == 0){
 } else {
     gitProject = args[1]
     Rpackage = args[2]
-
 }
 
 cat(">>>>>",Rpackage, "\n")

@@ -7,7 +7,7 @@ if %Install% == 1 (
 set R_LIBS_USER=
 set "R_LIBS_SITE=d:\prolfquaPackageBuilds\r-site-library_sigora"
 
-mdkir "d:\prolfquaPackageBuilds\test_build_sigora\*"
+mkdir "d:\prolfquaPackageBuilds\test_build_sigora"
 
 if %Install% == 1 (
     
