@@ -1,11 +1,16 @@
 #!/bin/Rscript
 #Sys.setenv(R_LIBS_SITE="/scratch/PROLFQUA/r-site-library/")
 
-reinstall = FALSE # nolint
 args = commandArgs(trailingOnly = TRUE)
-Gitproject = args[1]
-Rpackage = args[2]
-# Rpackage = 'prolfqua'
+if (length(args) > 0) {
+  Gitproject = args[1]
+  Rpackage = args[2]
+  # Rpackage = 'prolfqua'
+
+} else {
+  Gitproject = "ewallace"
+  Rpackage = "tidyqpcr"
+}
 
 cat(">>>>>",Rpackage, "\n")
 

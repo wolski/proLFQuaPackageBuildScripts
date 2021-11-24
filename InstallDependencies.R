@@ -1,6 +1,6 @@
 #!/bin/bash
 #Sys.setenv(R_LIBS_SITE="/scratch/PROLFQUA/r-site-library/")
-reinstall = FALSE
+
 args = commandArgs(trailingOnly = TRUE)
 gitProject = args[1]
 Rpackage = args[2]
@@ -49,7 +49,7 @@ if (retval != 0) {
 }
 
 
-if (dir.exists(paths) && reinstall) {
+if (dir.exists(paths)) {
     message(">>> installing package dependencies for : ", Rpackage)
     devtools::install_dev_deps(Rpackage, quiet = TRUE, type="source")
 }
