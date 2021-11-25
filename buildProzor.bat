@@ -7,7 +7,7 @@ if %Install% == 1 (
 set R_LIBS_USER=
 set "R_LIBS_SITE=d:\prolfquaPackageBuilds\r-site-library_prozor"
 
-mkdir "d:\prolfquaPackageBuilds\test_buildprozor"
+mkdir "d:\prolfquaPackageBuilds\test_build_prozor"
 
 if %Install% == 1 (
     rm -Rf d:/prolfquaPackageBuilds/test_build_prozor/*

@@ -8,7 +8,7 @@ Rpackage = args[2]
 
 if(length(args) == 0){
     gitProject = "wolski"
-    Rpackage = "sigora"
+    Rpackage = "prolfqua"
 } else {
     gitProject = args[1]
     Rpackage = args[2]
@@ -49,9 +49,9 @@ if (retval != 0) {
 }
 
 
-if (dir.exists(paths)) {
+if (dir.exists(Rpackage)) {
     message(">>> installing package dependencies for : ", Rpackage)
-    devtools::install_dev_deps(Rpackage, quiet = TRUE, type="source")
+    devtools::install_dev_deps(Rpackage, quiet = TRUE, type = "source")
 }
 
 cat("\n\n\n >>>> PREINSTALLED DEPENDENCIES <<<< \n\n\n")

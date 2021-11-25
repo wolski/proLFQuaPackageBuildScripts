@@ -36,7 +36,7 @@ if (retval != 0) {
 message(">>> running Rpackage check on ", Rpackage)
 pat = paste0(Rpackage, "_[0-9].*.tar.gz")
 packagetar = dir(".", pattern = pat)
-retval = system2("R", args = c("CMD", "check", packagetar))
+retval = system2("R", args = c("CMD", "check", "--as-cran", packagetar))
 if (retval != 0) {
   stop("ERROR : ", Rpackage, " package check failed!")
 }
