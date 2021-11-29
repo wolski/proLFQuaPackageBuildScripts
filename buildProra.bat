@@ -7,7 +7,7 @@ if %Install% == 1 (
 set R_LIBS_USER=
 set "R_LIBS_SITE=d:\prolfquaPackageBuilds\r-site-library_prora"
 
-mdkir "d:\prolfquaPackageBuilds\test_buildprora\*"
+mkdir "d:\prolfquaPackageBuilds\test_build_prora"
 
 if %Install% == 1 (
     

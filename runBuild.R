@@ -33,12 +33,22 @@ if (retval != 0) {
   stop("ERROR :", Rpackage, "package build failed!")
 }
 
-message(">>> running Rpackage check on ", Rpackage)
+message(">>> running Rpackage check on: ", Rpackage)
 pat = paste0(Rpackage, "_[0-9].*.tar.gz")
 packagetar = dir(".", pattern = pat)
-retval = system2("R", args = c("CMD", "check", "--as-cran", packagetar))
+retval = system2("R", args = c("CMD", "check", packagetar))
 if (retval != 0) {
   stop("ERROR : ", Rpackage, " package check failed!")
+}
+
+if (TRUE) {
+  message(">>> running Rpackage check CRAN on: ", Rpackage)
+  pat = paste0(Rpackage, "_[0-9].*.tar.gz")
+  packagetar = dir(".", pattern = pat)
+  retval = system2("R", args = c("CMD", "check", "--as-cran", packagetar))
+  if (retval != 0) {
+    stop("ERROR : ", Rpackage, " package check failed!")
+  }
 }
 
 message(">>> running biocheck for Rpackage")
