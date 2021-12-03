@@ -51,11 +51,11 @@ if (TRUE) {
   }
 }
 
-message(">>> running biocheck for Rpackage")
+message(">>> running BiocCheck for Rpackage :", packagetar)
 BiocCheck::BiocCheck(packagetar)
 
 message(">>> installing the pacakge ", packagetar, "\n")
-retval = system2("R", args = c("CMD","INSTALL", packagetar))
+retval = system2("R", args = c("CMD", "INSTALL", packagetar))
 if (retval != 0) {
   stop("ERROR : ", Rpackage, " package installation failed!")
 }
