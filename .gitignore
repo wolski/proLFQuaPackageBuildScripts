@@ -3,3 +3,4 @@ test_*/
 *.log
 .Rproj.user
 .Rhistory
+gh-pages-*/
