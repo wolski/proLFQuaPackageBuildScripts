@@ -13,9 +13,10 @@ mkdir "d:\prolfquaPackageBuilds\test_build_prolfqua\"
 if %Install% == 1 (
     rm -Rf d:/prolfquaPackageBuilds/r-site-library_prolfqua/*
     rm -Rf d:/prolfquaPackageBuilds/test_build_prolfqua/*
-
+    
     R -e "install.packages('remotes', repos = 'https://cloud.r-project.org' )"
-    R -e "remotes::install_gitlab('wolski/prolfquaData', host = 'gitlab.bfabric.org')"
+    
+    R -e "remotes::install_gitlab('wolski/prolfquadata', host = 'gitlab.bfabric.org')"
     R -e "BiocManager::install('vsn')"
     R -e "remotes::install_github('wolski/prozor')"
   
@@ -25,8 +26,8 @@ if %Install% == 1 (
 rm -Rf d:/prolfquaPackageBuilds/test_build_prolfqua/*
 Rscript.exe runBuild.R wolski prolfqua > runBuild_prolfqua.log 2>&1
 
-rm -Rf d:/prolfquaPackageBuilds/test_build_prolfquaBenchmark/*
-Rscript.exe runBuild.R wolski prolfquaBenchmark  > runBuild_prolfquaBenchmark.log 2>&1
+rm -Rf d:/prolfquaPackageBuilds/test_build_prolfquabenchmark/*
+Rscript.exe runBuild.R wolski prolfquabenchmark  > runBuild_prolfquabenchmark.log 2>&1
 
 
 
