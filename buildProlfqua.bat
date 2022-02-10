@@ -26,8 +26,9 @@ if %Install% == 1 (
 rm -Rf $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prolfqua/*
 Rscript runBuild.R wolski prolfqua > runBuild_prolfqua.log 2>&1
 
+mkdir $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prolfquabenchmark
 rm -Rf $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prolfquabenchmark/*
-Rscript.exe runBuild.R wolski prolfquabenchmark  > runBuild_prolfquabenchmark.log 2>&1
+Rscript runBuild.R wolski prolfquabenchmark  > runBuild_prolfquabenchmark.log 2>&1
 
 
 
