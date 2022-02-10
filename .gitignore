@@ -4,3 +4,4 @@ test_*/
 .Rproj.user
 .Rhistory
 gh-pages-*/
+.DS_Store
