@@ -8,8 +8,8 @@ if (length(args) > 0) {
   # Rpackage = 'prolfqua'
 
 } else {
-  Gitproject = "ewallace"
-  Rpackage = "tidyqpcr"
+  Gitproject = "wolski"
+  Rpackage = "prolfquabenchmark"
 }
 
 cat(">>>>>",Rpackage, "\n")
@@ -55,7 +55,7 @@ if (FALSE) {
 }
 
 
-message(">>> installing the pacakge ", packagetar, "\n")
+message(">>> installing the package ", packagetar, "\n")
 retval = system2("R", args = c("CMD", "INSTALL", packagetar))
 if (retval != 0) {
   stop("ERROR : ", Rpackage, " package installation failed!")
@@ -65,8 +65,27 @@ cat(" >>>>>> RUN EXAMPLES <<<<< ")
 devtools::run_examples(pkg = Rpackage)
 cat(" >>>>>> BUILD_SITES <<<<< ")
 
-message(">>> running Rpackagedown for Rpackage")
+message(">>> running Rpackagedown for Rpackage",  Rpackage)
 
 pkgdown::build_site(pkg = Rpackage)
 
+
+
+## checking in the gh-pages
+if(FALSE){
+  message(">>>> cloning gh-pages branch repository: ", repository)
+  ghpagesFolder <- paste0("gh-pages-",Rpackage)
+  retval = system2("git", args = c("clone", "-b", "gh-pages",  repository, ghpagesFolder))
+  if (retval != 0) {
+    stop("ERROR : could not clone gh-pages ", ghpagesFolder)
+  }
+  file.copy(file.path(Rpackage,"docs"), ghpagesFolder , recursive=TRUE)
+  setwd(ghpagesFolder)
+  system("git add .")
+  system('git commit -m "next doc version"')
+  system("git push")
+
+  setwd("..")
+
+} 
 setwd("..")
