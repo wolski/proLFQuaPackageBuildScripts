@@ -1,19 +1,24 @@
-set /A Install = 1
+Install=1
 
-if %Install% == 1 (
-    mkdir "d:\prolfquaPackageBuilds\r-site-library_prozor"
-)
+if [ $Install = 1 ]; then 
+    echo "dummm"
+    mkdir $HOME/__checkout/proLFQuaPackageBuildScripts/r-site-library_prozor
+fi
 
-set R_LIBS_USER=
-set "R_LIBS_SITE=d:\prolfquaPackageBuilds\r-site-library_prozor"
+R_LIBS_USER=
+export R_LIBS_SITE="$HOME/__checkout/proLFQuaPackageBuildScripts/r-site-library_prozor"
 
-mkdir "d:\prolfquaPackageBuilds\test_build_prozor"
+mkdir $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prozor
 
-if %Install% == 1 (
-    rm -Rf d:/prolfquaPackageBuilds/test_build_prozor/*
-    rm -Rf d:/prolfquaPackageBuilds/r-site-library_prozor/*
-    Rscript.exe InstallDependencies.R protViz prozor reinst 
-)
+
+if [ $Install = 1 ]; then
+    rm -Rf $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prozor/*
+    rm -Rf $HOME/__checkout/proLFQuaPackageBuildScripts/r-site-library_prozor/*
+
+    R --vanilla -e "install.packages(c('rmarkdown','remotes', 'AhoCorasickTrie', 'docopt', 'readr', 'seqinr'), repos = 'https://cloud.r-project.org' )"
+    
+    Rscript InstallDependencies.R protViz prozor reinst 
+fi
 
 rm -Rf d:/prolfquaPackageBuilds/test_build_prozor/*
-Rscript.exe runBuild.R protViz prozor  > runBuild_prozor.log 2>&1
+Rscript runBuild.R protViz prozor  > runBuild_prozor.log 2>&1

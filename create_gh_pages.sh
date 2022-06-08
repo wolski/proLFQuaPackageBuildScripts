@@ -1,5 +1,5 @@
 project="protviz"
-repo="prora"
+repo="prozor"
 # first setup
 git clone https://github.com/$project/$repo gh-pages-$repo
 cd gh-pages-$repo
@@ -9,7 +9,7 @@ git branch --set-upstream-to=origin/gh-pages gh-pages
 git push
  
 project="wolski"
-repo="prolfqua"
+repo="prolfquabenchmark"
 
 git clone -b gh-pages  https://github.com/$project/$repo gh-pages-$repo
 cd gh-pages-$repo

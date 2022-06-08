@@ -48,11 +48,12 @@ if (retval != 0) {
     stop("Can not clone : ", repository, "\n")
 }
 
-
 if (dir.exists(Rpackage)) {
     message(">>> installing package dependencies for : ", Rpackage)
-    devtools::install_dev_deps(Rpackage, quiet = FALSE, type = "source")
-    devtools::install_dev_deps(Rpackage, quiet = FALSE, type = "binary")
+    install.packages("devtools", repos = 'https://cloud.r-project.org' )
+    devtools::install_dev_deps(Rpackage, quiet = FALSE, type = "source", repos = "https://cloud.r-project.org" )
+    devtools::install_dev_deps(Rpackage, quiet = FALSE, type = "binary", repos = "https://cloud.r-project.org" )
 }
 
 cat("\n\n\n >>>> PREINSTALLED DEPENDENCIES <<<< \n\n\n")
+
