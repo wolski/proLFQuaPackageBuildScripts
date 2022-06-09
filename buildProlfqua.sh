@@ -1,4 +1,4 @@
-Install=1
+Install=0
 
 
 if [[ $Install = 1 ]]
@@ -21,13 +21,14 @@ then
     
     R --vanilla -e "install.packages(c('remotes','BiocManager') , repos = 'https://cloud.r-project.org' )"
     R --vanilla -e "install.packages('pander', repos = 'https://cloud.r-project.org' )"
-    
+    R --vanilla -e "remotes::install_gitlab('wolski/prolfquadata', host='gitlab.bfabric.org')"
     Rscript InstallDependencies.R fgcz prolfqua reinst > InstallDependencies_prolfqua.log 2>&1
 fi
 
 rm -Rf $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prolfqua/*
-
 Rscript runBuild.R fgcz prolfqua > runBuild_prolfqua.log 2>&1
+
+
 
 mkdir $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prolfquabenchmark
 rm -Rf $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prolfquabenchmark/*

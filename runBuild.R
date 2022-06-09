@@ -75,11 +75,15 @@ pkgdown::build_site(pkg = Rpackage)
 if (TRUE) {
   message(">>>> cloning gh-pages branch repository: ", repository)
   ghpagesFolder = paste0("gh-pages-", Rpackage)
+  if (dir.exists(ghpagesFolder)) {
+    unlink(ghpagesFolder, recursive = TRUE, force = TRUE)
+  }
   retval = system2("git",
    args = c("clone", "-b", "gh-pages",  repository, ghpagesFolder))
   if (retval != 0) {
     stop("ERROR : could not clone gh-pages ", ghpagesFolder)
   }
+  system(paste0("rm -r ", ghpagesFolder, "/*"))
   file.copy(file.path(Rpackage, "docs"), ghpagesFolder, recursive = TRUE)
   setwd(ghpagesFolder)
   system("git add .")
