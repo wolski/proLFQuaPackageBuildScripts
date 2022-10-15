@@ -2,72 +2,83 @@
 #Sys.setenv(R_LIBS_SITE="/scratch/PROLFQUA/r-site-library/")
 
 args = commandArgs(trailingOnly = TRUE)
+branchname = NULL
 if (length(args) > 0) {
   Gitproject = args[1]
   Rpackage = args[2]
-  # Rpackage = 'prolfqua'
-
+  if ( length(args) == 3 ) {
+    branchname = args[3]
+  }
 } else {
   Gitproject = "wolski"
   Rpackage = "prolfquabenchmark"
 }
 
+
+
 cat(">>>>>",Rpackage, "\n")
 
 test_dir = paste0("test_build_", Rpackage, "/")
 setwd(test_dir)
+repository = paste0("https://github.com/", Gitproject, "/", Rpackage)
 
+if (TRUE) {
 
-if (!dir.exists(Rpackage)) {
-  repository = paste0("https://github.com/", Gitproject, "/", Rpackage)
-  message(">>>> cloning repository: ", repository)
-  retval = system2("git", args = c("clone", repository))
+  if (!dir.exists(Rpackage)) {
+    message(">>>> cloning repository: ", repository)
+    if (is.null(branchname)) {
+      args = c("clone", repository)
+    } else {
+      args = c("clone", repository, "-b", branchname)
+    }
+    retval = system2("git", args = args)
 
-  if (retval != 0) {
-    stop("Can not clone : ", repository, "\n")
+    if (retval != 0) {
+      stop("Can not clone : ", repository, "\n")
+    }
   }
-}
 
-retval = system2("R", args = c("CMD", "build", "--log", Rpackage))
-if (retval != 0) {
-  stop("ERROR :", Rpackage, "package build failed!")
-}
+  retval = system2("R", args = c("CMD", "build", "--log", Rpackage))
+  if (retval != 0) {
+    stop("ERROR :", Rpackage, "package build failed!")
+  }
 
-message(">>> running Rpackage check on: ", Rpackage)
-pat = paste0(Rpackage, "_[0-9].*.tar.gz")
-packagetar = dir(".", pattern = pat)
-retval = system2("R", args = c("CMD", "check", packagetar))
-if (retval != 0) {
-  stop("ERROR : ", Rpackage, " package check failed!")
-}
-
-if (FALSE) {
-  message(">>> running Rpackage check CRAN on: ", Rpackage)
+  message(">>> running Rpackage check on: ", Rpackage)
   pat = paste0(Rpackage, "_[0-9].*.tar.gz")
   packagetar = dir(".", pattern = pat)
-  retval = system2("R", args = c("CMD", "check", "--as-cran", packagetar))
+  retval = system2("R", args = c("CMD", "check", packagetar))
   if (retval != 0) {
     stop("ERROR : ", Rpackage, " package check failed!")
   }
-  message(">>> running BiocCheck for Rpackage :", packagetar)
-  BiocCheck::BiocCheck(packagetar)
 
+  if (TRUE) {
+    message(">>> running Rpackage check CRAN on: ", Rpackage)
+    pat = paste0(Rpackage, "_[0-9].*.tar.gz")
+    packagetar = dir(".", pattern = pat)
+    retval = system2("R", args = c("CMD", "check", "--as-cran", packagetar))
+    if (retval != 0) {
+      stop("ERROR : ", Rpackage, " package check failed!")
+    }
+    message(">>> running BiocCheck for Rpackage :", packagetar)
+    BiocCheck::BiocCheck(packagetar)
+
+  }
+
+
+  message(">>> installing the package ", packagetar, "\n")
+  retval = system2("R", args = c("CMD", "INSTALL", packagetar))
+  if (retval != 0) {
+    stop("ERROR : ", Rpackage, " package installation failed!")
+  }
+
+  cat(" >>>>>> RUN EXAMPLES <<<<< ")
+  devtools::run_examples(pkg = Rpackage)
+  cat(" >>>>>> BUILD_SITES <<<<< ")
+  message(">>> running Rpackagedown for Rpackage",  Rpackage)
+  pkgdown::build_site(pkg = Rpackage)
 }
 
 
-message(">>> installing the package ", packagetar, "\n")
-retval = system2("R", args = c("CMD", "INSTALL", packagetar))
-if (retval != 0) {
-  stop("ERROR : ", Rpackage, " package installation failed!")
-}
-
-cat(" >>>>>> RUN EXAMPLES <<<<< ")
-devtools::run_examples(pkg = Rpackage)
-cat(" >>>>>> BUILD_SITES <<<<< ")
-
-message(">>> running Rpackagedown for Rpackage",  Rpackage)
-
-pkgdown::build_site(pkg = Rpackage)
 
 
 
@@ -84,7 +95,7 @@ if (TRUE) {
     stop("ERROR : could not clone gh-pages ", ghpagesFolder)
   }
   system(paste0("rm -r ", ghpagesFolder, "/*"))
-  file.copy(file.path(Rpackage, "docs"), ghpagesFolder, recursive = TRUE)
+  file.copy(dir(file.path(Rpackage, "docs"), full.names=TRUE), ghpagesFolder, recursive = TRUE)
   setwd(ghpagesFolder)
   system("git add .")
   system('git commit -m "next doc version"')
