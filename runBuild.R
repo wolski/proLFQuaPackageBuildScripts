@@ -12,6 +12,7 @@ if (length(args) > 0) {
 } else {
   Gitproject = "wolski"
   Rpackage = "prolfquabenchmark"
+  branchname = "main"
 }
 
 
@@ -70,16 +71,15 @@ if (TRUE) {
   if (retval != 0) {
     stop("ERROR : ", Rpackage, " package installation failed!")
   }
-
+  wd = getwd()
+  setwd(Rpackage)
   cat(" >>>>>> RUN EXAMPLES <<<<< ")
-  devtools::run_examples(pkg = Rpackage)
+  devtools::run_examples(pkg = ".")
   cat(" >>>>>> BUILD_SITES <<<<< ")
   message(">>> running Rpackagedown for Rpackage",  Rpackage)
-  pkgdown::build_site(pkg = Rpackage)
+  pkgdown::build_site_github_pages(pkg = ".", dest_dir = "docs")
+  setwd(wd)
 }
-
-
-
 
 
 ## checking in the gh-pages

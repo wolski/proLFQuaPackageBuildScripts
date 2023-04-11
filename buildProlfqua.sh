@@ -29,8 +29,6 @@ fi
 rm -Rf $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prolfqua/*
 Rscript runBuild.R fgcz prolfqua Modelling2R6 > runBuild_prolfqua.log 2>&1
 
-
-
 mkdir $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prolfquabenchmark
 rm -Rf $HOME/__checkout/proLFQuaPackageBuildScripts/test_build_prolfquabenchmark/*
 Rscript runBuild.R wolski prolfquabenchmark main  > runBuild_prolfquabenchmark.log 2>&1
